@@ -24,10 +24,8 @@ namespace ExampleFunction
         public ServiceProviderBuilder(ILoggerFactory loggerFactory) =>
             _loggerFactory = loggerFactory;
 
-        public IServiceProvider Build()
+        public IServiceProvider Build(ServiceCollection services)
         {
-            var services = new ServiceCollection();
-
             services.AddTransient<ITransientGreeter, Greeter>();
             services.AddScoped<IScopedGreeter, Greeter>();
             services.AddSingleton<ISingletonGreeter, Greeter>();

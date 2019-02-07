@@ -10,7 +10,7 @@ namespace Willezone.Azure.WebJobs.Extensions.DependencyInjection
         public ServiceProviderBuilder(Action<IServiceCollection> configureServices) =>
             _configureServices = configureServices;
 
-        public IServiceProvider Build()
+        public IServiceProvider Build(ServiceCollection serviceCollection)
         {
             var services = new ServiceCollection();
             _configureServices(services);

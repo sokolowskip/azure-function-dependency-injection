@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Willezone.Azure.WebJobs.Extensions.DependencyInjection
 {
@@ -10,7 +11,8 @@ namespace Willezone.Azure.WebJobs.Extensions.DependencyInjection
         /// <summary>
         /// Creates an instance of an <see cref="IServiceProvider"/>.
         /// </summary>
+        /// <param name="serviceCollection"></param>
         /// <returns></returns>
-        IServiceProvider Build();
+        IServiceProvider Build(ServiceCollection serviceCollection);
     }
 }

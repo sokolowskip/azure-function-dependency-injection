@@ -43,5 +43,17 @@ namespace ExampleFunction
             greeter.Greet();
             return new OkResult();
         }
+
+        [FunctionName("QueueTrigerred")]
+        public static void RunQueue(
+            [ServiceBusTrigger("v2Queue", Connection = "ServiceBusConnection")] string message,
+            ILogger logger,
+            [Inject] IMessagePropertiesProvider messagePropertiesProvider)
+        {
+            foreach (var property in messagePropertiesProvider.GetProperties())
+            {
+                logger.LogWarning(property.Key);
+            }
+        }
     }
 }

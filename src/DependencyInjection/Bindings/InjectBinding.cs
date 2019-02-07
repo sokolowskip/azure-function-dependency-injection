@@ -23,7 +23,7 @@ namespace Willezone.Azure.WebJobs.Extensions.DependencyInjection
 
         public Task<IValueProvider> BindAsync(BindingContext context)
         {
-            var value = _serviceProviderHolder.GetRequiredService(context.FunctionInstanceId, _type);
+            var value = _serviceProviderHolder.GetRequiredService(context.FunctionInstanceId, _type, context);
             return BindAsync(value, context.ValueContext);
         }
 

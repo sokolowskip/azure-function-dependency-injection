@@ -52,15 +52,19 @@ namespace Willezone.Azure.WebJobs.Extensions.DependencyInjection
 
         private static void AddCommonDependencyInjection(IWebJobsBuilder builder)
         {
-            builder.Services.AddSingleton(provider =>
-            {
-                var serviceProviderBuilder = provider.GetRequiredService<IServiceProviderBuilder>();
-                return new ServiceProviderHolder(serviceProviderBuilder.Build());
-            });
+            builder.Services.AddSingleton(CreateServiceProviderHolder);
 
             builder.Services.AddSingleton<InjectBindingProvider>();
             builder.Services.TryAddEnumerable(ServiceDescriptor.Singleton<IFunctionFilter, ScopeCleanupFilter>());
             builder.AddExtension<InjectConfiguration>();
+        }
+
+        private static ServiceProviderHolder CreateServiceProviderHolder(IServiceProvider provider)
+        {
+            var serviceProviderBuilder = provider.GetRequiredService<IServiceProviderBuilder>();
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddScoped<IMessagePropertiesProvider, MessagePropertiesProvider>();
+            return new ServiceProviderHolder(serviceProviderBuilder.Build(serviceCollection));
         }
     }
 }
